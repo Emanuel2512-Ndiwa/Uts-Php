@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tugas - UTS Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="#">UTS Web</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="beranda.html">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="tentang.html">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="kisahku.html">Kisahku</a></li>
+          <li class="nav-item"><a class="nav-link" href="pendidikan.html">Pendidikan</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tugas.html">Tugas</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section id="tugas" class="p-5 bg-light">
+    <div class="container">
+      <h3 class="text-center section-title">Tugas Interaktif</h3>
+      <form id="tugasForm">
+        <div class="mb-3"><label class="form-label">Nama Depan</label><input type="text" class="form-control" id="namaDepan"></div>
+        <div class="mb-3"><label class="form-label">Nama Belakang</label><input type="text" class="form-control" id="namaBelakang"></div>
+        <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" id="email"></div>
+        <div class="mb-3"><label class="form-label">Jumlah Pilihan Hobi</label><input type="number" class="form-control" id="jumlahHobi"></div>
+        <button type="button" class="btn btn-primary" onclick="inputHobi()">Oke</button>
+      </form>
+      <div id="hobiForm"></div>
+      <div id="hasil" class="mt-4"></div>
+    </div>
+  </section>
+
+  <script>
+    function inputHobi() {
+      let jumlah = document.getElementById('jumlahHobi').value;
+      let container = document.getElementById('hobiForm');
+      container.innerHTML = '';
+      for (let i = 0; i < jumlah; i++) {
+        container.innerHTML += `<div class='mb-2'><input type='text' class='form-control' id='hobi${i}' placeholder='Hobi ${i+1}'></div>`;
+      }
+      container.innerHTML += `<button class='btn btn-success mt-2' onclick='tampilkanCheckbox()'>Oke</button>`;
+    }
+
+    function tampilkanCheckbox() {
+      let jumlah = document.getElementById('jumlahHobi').value;
+      let container = document.getElementById('hobiForm');
+      let checkboxHTML = '<form id="checkboxForm">';
+      for (let i = 0; i < jumlah; i++) {
+        let hobi = document.getElementById(`hobi${i}`).value;
+        checkboxHTML += `<div class='form-check'><input class='form-check-input' type='checkbox' value='${hobi}' id='check${i}'><label class='form-check-label'>${hobi}</label></div>`;
+      }
+      checkboxHTML += '</form><button class="btn btn-info mt-2" onclick="tampilkanHasil()">Oke</button>';
+      container.innerHTML = checkboxHTML;
+    }
+
+    function tampilkanHasil() {
+      let namaDepan = document.getElementById('namaDepan').value;
+      let namaBelakang = document.getElementById('namaBelakang').value;
+      let email = document.getElementById('email').value;
+      let jumlah = document.getElementById('jumlahHobi').value;
+      let semuaHobi = [];
+      let hobiDisukai = [];
+      for (let i = 0; i < jumlah; i++) {
+        let hobi = document.getElementById(`check${i}`).value;
+        semuaHobi.push(hobi);
+        if (document.getElementById(`check${i}`).checked) {
+          hobiDisukai.push(hobi);
+        }
+      }
+      document.getElementById('hasil').innerHTML =
+        `<div class='alert alert-success shadow'><b>Hallo, nama saya ${namaDepan} ${namaBelakang}</b>, dengan email <b>${email}</b>, saya mempunyai sejumlah <b>${jumlah}</b> pilihan hobi yaitu <b>${semuaHobi.join(', ')}</b>, dan saya menyukai <b>${hobiDisukai.join(', ')}</b>.</div>`;
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
